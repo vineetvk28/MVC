@@ -1,0 +1,275 @@
+﻿@model Jitendra_Joshi_Assignment.Models.Employee
+
+@{
+    ViewBag.Title = "Create";
+    var regEx = @"/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { onsubmit = "ValidateEmployee();" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Employee</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.YearsOfExperience, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.YearsOfExperience, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.YearsOfExperience, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmployeeCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EmployeeCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+$(document).ready(function () {
+
+ $('#YearsOfExperience').keypress(function (e) {
+NumericOnly(e);
+});
+
+ $('#PhoneNumber').keypress(function (e) {
+NumericOnly(e);
+});
+
+ $('#FirstName').keypress(function (e) {
+AlphaNumeric(e);
+});
+
+ $('#LastName').keypress(function (e) {
+AlphaNumeric(e);
+});
+});
+
+ function NumericOnly(e) {
+var regex = new RegExp("^[0-9]+$");
+var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+if (regex.test(str)) {
+return true;
+}
+e.preventDefault();
+return false;
+};
+
+ function AlphaNumeric(e) {
+var regex = new RegExp("^[a-z]+[A-Z]+[0-9])$");
+var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+if (regex.test(str)) {
+return true;
+}
+e.preventDefault();
+return false;
+};
+function ValidateEmail(email) {
+var expr = @regEx;
+return expr.test(email);
+};
+
+
+function ValidateEmployee() {
+event = event || window.event || event.srcElement;
+var return_val = true;
+
+var firstName = '#FirstName';
+if ($(firstName).val().trim() == '') {
+$(firstName).next('span').text('Please enter First Name.').show();
+return_val = false;
+} else {
+$(firstName).next('span').hide();
+}
+
+ var lastName = '#LastName';
+if ($(lastName).val().trim() == '') {
+$(lastName).next('span').text('Please enter Last Name.').show();
+return_val = false;
+} else {
+$(lastName).next('span').hide();
+}
+
+ var experience = '#YearsOfExperience';
+if ($(experience).val().trim() == '') {
+$(experience).next('span').text('Please enter this field.').show();
+return_val = false;
+} else {
+$(experience).next('span').hide();
+}
+
+var employeecode = '#EmployeeCode';
+if ($(employeecode).val().trim() == '') {
+$(employeecode).next('span').text('Please enter Employee code').show();
+return_val = false;
+} else {
+$(employeecode).next('span').hide();
+}
+
+ var contact = '#PhoneNumber';
+if ($(contact).val().trim() == '') {
+$(contact).next('span').text('Please enter Contact Number.').show();
+return_val = false;
+} else {
+$(contact).next('span').hide();
+}
+
+if (!return_val) {
+event.preventDefault();
+}
+
+ event.preventDefault();
+}
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+$(document).ready(function () {
+
+ $('#YearsOfExperience').keypress(function (e) {
+NumericOnly(e);
+});
+
+ $('#PhoneNumber').keypress(function (e) {
+NumericOnly(e);
+});
+
+ $('#FirstName').keypress(function (e) {
+AlphaNumeric(e);
+});
+
+ $('#LastName').keypress(function (e) {
+AlphaNumeric(e);
+});
+});
+
+ function NumericOnly(e) {
+var regex = new RegExp("^[0-9]+$");
+var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+if (regex.test(str)) {
+return true;
+}
+e.preventDefault();
+return false;
+};
+
+ function AlphaNumeric(e) {
+var regex = new RegExp("^[a-z]+[A-Z]+[0-9])$");
+var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+if (regex.test(str)) {
+return true;
+}
+e.preventDefault();
+return false;
+};
+function ValidateEmail(email) {
+var expr = @regEx;
+return expr.test(email);
+};
+
+
+function ValidateEmployee() {
+event = event || window.event || event.srcElement;
+var return_val = true;
+
+var firstName = '#FirstName';
+if ($(firstName).val().trim() == '') {
+$(firstName).next('span').text('Please enter First Name.').show();
+return_val = false;
+} else {
+$(firstName).next('span').hide();
+}
+
+ var lastName = '#LastName';
+if ($(lastName).val().trim() == '') {
+$(lastName).next('span').text('Please enter Last Name.').show();
+return_val = false;
+} else {
+$(lastName).next('span').hide();
+}
+
+ var experience = '#YearsOfExperience';
+if ($(experience).val().trim() == '') {
+$(experience).next('span').text('Please enter this field.').show();
+return_val = false;
+} else {
+$(experience).next('span').hide();
+}
+
+var employeecode = '#EmployeeCode';
+if ($(employeecode).val().trim() == '') {
+$(employeecode).next('span').text('Please enter Employee code').show();
+return_val = false;
+} else {
+$(employeecode).next('span').hide();
+}
+
+ var contact = '#PhoneNumber';
+if ($(contact).val().trim() == '') {
+$(contact).next('span').text('Please enter Contact Number.').show();
+return_val = false;
+} else {
+$(contact).next('span').hide();
+}
+
+if (!return_val) {
+event.preventDefault();
+}
+
+ event.preventDefault();
+}
+    </script>
+    }

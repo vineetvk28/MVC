@@ -1,0 +1,96 @@
+﻿@model Jitendra_Joshi_Assignment.Models.Employee
+
+@{
+    ViewBag.Title = "Delete_JS";
+}
+
+<h2>Delete_JS</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YearsOfExperience)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearsOfExperience)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+        @section Scripts {
+            <script>
+
+                function Delete(id) {
+                    var link = 'https://localhost:44368/Employee/Delete/'+ id;
+                    $.ajax({
+                        type: "POST",
+                        url: link,
+                        data: JSON.stringify({ ID: id }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function () {
+                            alert("Data has been deleted.");
+                        },
+                        error: function () {
+                            alert("Error while deleting data");
+                        }
+                    });
+                }
+            </script>
+        }}
+    </div>
+
+    }
